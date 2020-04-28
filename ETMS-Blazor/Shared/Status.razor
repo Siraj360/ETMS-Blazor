@@ -1,0 +1,59 @@
+﻿
+
+<div class="col-xl-3 col-lg-6">
+    <div class="card text-white bg-@colour" stype="background-color: red">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-3">
+                    <i class="fas fa-@type fa-5x"></i>
+                </div>
+                <div class="col-9 text-right">
+                    <h1 class="display-4">@number</h1>
+                </div>
+            </div>
+            <div class="row" style="min-height: 48px;">
+                <div class="col-12">
+                    <small>@comments</small>
+                </div>
+            </div>
+        </div>
+        <a href="@linkto" class="panel-url">
+
+            <div class="card-footer text-white bg-secondary">
+
+                <span class="float-left"><strong>View Details</strong></span>
+
+                <span class="float-right">
+                    <i class="fa fa-arrow-circle-right"></i>
+                </span>
+
+                <div class="clearfix"></div>
+
+            </div>
+
+        </a>
+    </div>
+</div>
+
+
+
+@code {
+
+    //string colour = "info";
+    //string type = "heart";
+    //string comments = "texsting how work";
+    //int number = 5;
+    //string linkto = "siraj360.com";
+
+    [Parameter]
+    public string colour { get; set; }
+    [Parameter]
+    public string type { get; set; }
+    [Parameter]
+    public string comments { get; set; }
+    [Parameter]
+    public string linkto { get; set; }
+    [Parameter]
+    public int number { get; set; }
+
+}

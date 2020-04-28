@@ -1,0 +1,44 @@
+﻿@page "/employee-admin"
+@inject IEmployeeService EmployeeService
+@code
+{
+    int ex = 1;
+}
+<div class="row">
+    <div class="col-md-8">
+        <h5>Employee Training Admin</h5>
+    </div>
+    <div class="col-md-4">
+        <a type="button" class="btn btn-dark btn-sm float-right" href="/addemployee">Create New Employee</a>
+    </div>
+</div>
+
+
+@if (employees == null)
+{
+    <Loader />
+}
+else
+{
+    <table class='table table-sm'>
+        <tbody>
+            @foreach (var employee in employees)
+            {
+                string employeId = employee.EmployeeID.ToString();
+
+                <EmployeeInfo ex="@ex" employeeId="@employeId"></EmployeeInfo>
+                ex++;
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Employee> employees;
+
+    protected override async Task OnInitializedAsync()
+    {
+        employees = await EmployeeService.GetEmployees();
+    }
+
+}

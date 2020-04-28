@@ -1,0 +1,115 @@
+﻿@page "/dashboard"
+@inject IEmployeeCourseService EmployeeCourseService
+@code{
+    int ix = 1;
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <h5>ETMS : Employee Training Management System</h5>
+    </div>
+    <div class="col-md-4">
+        @*  <a type="button" class="btn btn-dark btn-sm float-right" href="/addemployee">Create New Employee</a>*@
+    </div>
+</div>
+
+<div class="row">
+    <Status number="@statusInfo.TotalEmployeeCourses" type="chart-line" colour="primary" comments=@text1  linkto="listemployees" />
+    <Status number="@statusInfo.EmployeeAllComplterd" type="smile" colour="success" comments=@text2 linkto="listemployees" />
+    <Status number="@statusInfo.EmployeeAllNotStarted" type="exclamation-circle" colour="danger" comments=@text3 linkto="listcourses" />
+    <Status number="@statusInfo.TotalCourses" type="bicycle" colour="warning" comments="Courses, 4 courses are assigned to each employee." linkto="listcourses" />
+
+
+</div>
+<br />
+
+@if (employeesCourseInfoList == null)
+{
+    <Loader/>
+}
+else
+{
+    <table class='table table-sm table-bordered table-striped table-hover'>
+        <thead>
+            <tr>
+                <th  scope="col" class="text-center table-dark">#</th>
+                <th colspan="2" class="text-center table-warning" scope="col">Employee</th>
+                <th scope="col" class="text-center table-success">?</th>
+                <th colspan="2" class="text-center table-secondary" scope="col">Training Course</th>
+                @*<th scope="col" class="text-center">Complet </th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var info in employeesCourseInfoList)
+            {
+                 string tdClass = $"{(info.isComplete ? "table-success" : "table-danger")}";
+            <tr>
+                <th scope="row" class="text-center table-dark">
+                    <span class="badge badge-pill badge-light">@ix</span>
+                </th>
+                <td class="@info.cellCSS">@info.Employee.Name</td>
+                <td class="@info.cellCSS">
+                    <strong>@info.TotalEmployeeCompleted / @(info.TotalEmployeeNotStarted+info.TotalEmployeeCompleted)</strong>
+                    &nbsp;
+                    <span class="badge badge-pill badge-warning">
+                        @info.PercentEmployeCompleted
+                    </span>
+                </td>
+
+                <td class="text-center @tdClass">
+                    @if (info.isComplete)
+                    {
+                        <span class="oi oi-circle-check"></span>
+                    }
+                    else
+                    {
+                        <span class="oi oi-circle-x"></span>
+                    }
+                </td>
+                <td>
+                    @info.Course.Code : @info.Course.Name
+                </td>
+                <td>
+                    <strong>    @info.TotalCourseCompleted / @(info.TotalCourseNotStarted+info.TotalCourseCompleted) </strong>
+                    &nbsp;
+                    <span class="badge badge-pill badge-secondary">
+                        @info.PercentCourcesCompleted
+                    </span>
+                </td>
+            </tr>
+                ix++;
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    string text1;
+    string text2;
+    string text3;
+
+
+    List<EmployeeCourseInfo> employeesCourseInfoList;
+
+    StatusInfo statusInfo = new StatusInfo();
+
+    protected override async Task OnInitializedAsync()
+    {
+        employeesCourseInfoList = await EmployeeCourseService.GetEmployeeCourses();
+
+        statusInfo = EmployeeCourseService.GetStatus();
+
+        text1 = "Courses assigned to " + statusInfo.TotalEmployees + " employees.";
+
+        double perComplete = statusInfo.EmployeeAllComplterd*100/statusInfo.TotalEmployees;
+
+        text2 = "Employees has complted all 4 courses - " + (perComplete/100).ToString("P") +".";
+
+        double perNotStart = statusInfo.EmployeeAllNotStarted*100/statusInfo.TotalEmployees;
+
+        text3 = "Employees has yet not strated - " + (perNotStart/100).ToString("P") + ".";
+
+    }
+
+}

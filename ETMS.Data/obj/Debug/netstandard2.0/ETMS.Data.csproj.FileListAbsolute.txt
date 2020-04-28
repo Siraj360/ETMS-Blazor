@@ -1,0 +1,9 @@
+C:\Users\Siraj\source\repos\ETMS-Blazor\ETMS.Data\bin\Debug\netstandard2.0\ETMS.Data.deps.json
+C:\Users\Siraj\source\repos\ETMS-Blazor\ETMS.Data\bin\Debug\netstandard2.0\ETMS.Data.dll
+C:\Users\Siraj\source\repos\ETMS-Blazor\ETMS.Data\obj\Debug\netstandard2.0\ETMS.Data.csprojAssemblyReference.cache
+C:\Users\Siraj\source\repos\ETMS-Blazor\ETMS.Data\obj\Debug\netstandard2.0\ETMS.Data.AssemblyInfoInputs.cache
+C:\Users\Siraj\source\repos\ETMS-Blazor\ETMS.Data\obj\Debug\netstandard2.0\ETMS.Data.AssemblyInfo.cs
+C:\Users\Siraj\source\repos\ETMS-Blazor\ETMS.Data\bin\Debug\netstandard2.0\ETMS.Data.pdb
+C:\Users\Siraj\source\repos\ETMS-Blazor\ETMS.Data\obj\Debug\netstandard2.0\ETMS.Data.csproj.CoreCompileInputs.cache
+C:\Users\Siraj\source\repos\ETMS-Blazor\ETMS.Data\obj\Debug\netstandard2.0\ETMS.Data.dll
+C:\Users\Siraj\source\repos\ETMS-Blazor\ETMS.Data\obj\Debug\netstandard2.0\ETMS.Data.pdb

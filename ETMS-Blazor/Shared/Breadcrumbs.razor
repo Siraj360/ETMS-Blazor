@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Components
+
+
+@inject NavigationManager navigationManager
+@implements IDisposable
+@inject AuthenticationStateProvider authStateProvider
+
+<ul class="breadcrumb">
+    <li>
+        <a href="/">@RootLinkTitle</a>
+    </li>
+    @foreach (var path in paths.Select((value, i) => (value, i)))
+    {
+        if (path.i == paths.Count())
+        {
+            <li><a href="@(baseUrl + String.Join("/", paths))">@path.value.Replace("_", " ").Replace("-", " ")</a></li>
+        }
+        else
+        {
+            <li>@path.value.Replace("_", " ").Replace("-", " ")</li>
+        }
+    }
+</ul>
+
+@code {
+
+    public bool IsLoggedIn = false;
+
+    [Parameter]
+    public string RootLinkTitle { get; set; }
+
+    public string[] paths;
+    public string baseUrl;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        baseUrl = navigationManager.BaseUri;
+        await BuildBreadcrumbsAsync();
+        navigationManager.LocationChanged += OnLocationChanges;
+        base.OnInitializedAsync();
+    }
+
+    void OnLocationChanges(object sender, LocationChangedEventArgs e) => BuildBreadcrumbsAsync();
+
+    private async Task BuildBreadcrumbsAsync()
+    {
+        string uri = navigationManager.Uri.Replace(baseUrl, "").Trim();
+        paths = String.IsNullOrEmpty(uri) ? new string[] { } : uri.Split('/');
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        navigationManager.LocationChanged -= OnLocationChanges;
+    }
+}

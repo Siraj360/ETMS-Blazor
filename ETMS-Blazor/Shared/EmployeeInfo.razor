@@ -1,0 +1,123 @@
+﻿@inject IEmployeeService EmployeeService
+@inject IEmployeeCourseService EmployeeCourseService
+
+@code
+{
+    int cx = 1;
+}
+
+<tr>
+    <td>
+        <div class="card border-@employee.cssStyle">
+            <div class="card-header cursor-pointer" @onclick="ShowHideList">
+                <div class="row">
+                    <div class="col-md-10">
+                        <span class="btn btn-secondary btn-sm @ShowHideArrowCssClass">
+                            <i class="fas fa-arrow-up"></i>
+                        </span>
+                        <span class="btn btn-secondary btn-sm @ShowHideListCssClass">
+                            <i class="fas fa-arrow-down"></i>
+                        </span>
+                        &nbsp;
+                        <span class="badge badge-pill badge-primary"> @ex</span> &nbsp;
+                        <span class="text-@employee.cssStyle" style="font-weight:bold">@employee.Name</span> &nbsp;
+                        <span class="badge badge-secondary">(@employee.HireDate.Date.ToString("dd MMM yyyy"))</span>
+                    </div>
+                    <div class="col-md-2 float-right">
+                        <strong>@employee.TotalCoursesCompleted / @employee.TotalCoursesAssined</strong>&nbsp;
+                        <span class="badge badge-dark">@employee.PercentCourcesCompleted</span>&nbsp;
+                    </div>
+                </div>
+
+            </div>
+            <div  class="@ShowHideListCssClass">
+                <table class="table table-sm  table-bordered table-@employee.cssStyle">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">#</th>
+                            <th scope="col">Course</th>
+                            <th scope="col" class="text-center">Code</th>
+                            <th class="text-center" scope="col">Completed?</th>
+                            <th scope="col" class="text-center"> Make ...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (employee.EmployeeCourses != null && employee.EmployeeCourses.Count > 0)
+                        {
+                            cx = 1;
+                            @foreach (var employeeCourses in employee.EmployeeCourses)
+                            {
+                                <tr>
+                                    <th scope="row" class="text-center">
+                                        <span class="badge badge-pill badge-dark">@cx</span>
+                                    </th>
+                                    <td>@employeeCourses.Course.Name</td>
+                                    <td class="text-center">@employeeCourses.Course.Code</td>
+                                    <td class="text-center">
+                                        @if (employeeCourses.isComplete)
+                                        {
+                                            <span class="oi oi-circle-check"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="oi oi-circle-x"></span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (employeeCourses.isComplete)
+                                        {
+                                            <button type="button" class="btn btn-danger btn-sm" @onclick="()=>ChangeCompleteStatus(employeeCourses.EmployeeCourseID)">Uncomplete</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-success btn-sm" @onclick="()=>ChangeCompleteStatus(employeeCourses.EmployeeCourseID)">Complete</button>
+                                        }
+                                    </td>
+                                </tr>
+                                cx++;
+                            }
+                        }
+                        else
+                        {
+                            <tr class="table-warning">
+                                <td colspan="5" scope="row">&nbsp;&nbsp;<span class="oi oi-warning"></span>&nbsp;Please add course.</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public string employeeId { get; set; }
+    [Parameter]
+    public int ex { get; set; }
+
+    Employee employee;
+
+    protected override async Task OnInitializedAsync()
+    {
+        employee = await EmployeeService.GetEmployeeInfo(employeeId);
+    }
+
+
+    private async Task ChangeCompleteStatus(int id)
+    {
+        await EmployeeCourseService.ChangeCompleteStatus(id);
+    }
+
+    private bool isShowList= true;
+    private string ShowHideListCssClass => isShowList ? "is_show" : "is_hide";
+    private string ShowHideArrowCssClass => isShowList ? "is_hide" : "is_show";
+
+    private void ShowHideList()
+    {
+        isShowList = !isShowList;
+    }
+}

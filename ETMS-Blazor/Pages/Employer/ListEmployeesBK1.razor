@@ -1,0 +1,40 @@
+﻿@page "/listemployees1"
+@inject IEmployeeService EmployeeService
+
+<h2>Employee Details</h2>
+<p>
+    <a href="/addemployee">Create New Employee</a>
+</p>
+@if (employees == null)
+{
+    <p>Loading page...</p>
+}
+else
+{
+
+    @foreach (var employee in employees)
+    {
+
+        <div class="card">
+            <div class="card-header">
+                @employee.Name    @employee.HireDate.Date.ToString("dd MMM yyyy")
+            </div>
+            <div class="card-body">
+                something here
+            </div>
+        </div>
+
+
+
+    }
+}
+
+
+@code {
+    List<Employee> employees;
+
+    protected override async Task OnInitializedAsync()
+    {
+        employees = await EmployeeService.GetEmployees();
+    }
+}   

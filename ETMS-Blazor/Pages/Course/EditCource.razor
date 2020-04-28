@@ -1,0 +1,58 @@
+﻿@page "/editcourse/{id}"
+@inject NavigationManager NavigationManager
+@inject ICourseService CourseService
+
+<h3>Edit Course</h3>
+
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Name" class="control-label">Name</label>
+                <input for="Name" class="form-control" @bind="@course.Name" />
+            </div>
+            <div class="form-group">
+                <label for="Department" class="control-label">Code</label>
+                <input for="Department" class="form-control" @bind="@course.Code" />
+            </div>
+            <div class="form-group">
+                <label for="Designation" class="control-label">Designation</label>
+                <textarea for="Designation" class="form-control" @bind="@course.Description" />
+            </div>
+            @*<div class="form-group">
+                <label for="IsCompleted" class="control-label">Is Completed?</label>
+                <input type="checkbox" for="IsCompleted" class="form-control float-left" @bind="@course.IsCompleted" />
+            </div>*@
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" @onclick="@UpdateCourse" value="Update" />
+            <input type="button" class="btn" @onclick="@Cancel" value="Cancel" />
+        </div>
+    </div>
+</form>
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+
+    Course course = new Course();
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = await CourseService.SingleCourse(id);
+    }
+
+    protected async Task UpdateCourse()
+    {
+        await CourseService.EditCourse(id, course);
+        NavigationManager.NavigateTo("listcourses");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("listcourses");
+    }
+}   

@@ -1,0 +1,36 @@
+﻿@inherits LayoutComponentBase
+
+<div class="@ShowHideCssClass">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+</div>
+<div class="main">
+    <div class="top-row px-4">
+
+
+        <a class="btn-link first-link" @onclick="ShowHideMenu"> <span class="oi oi-menu"></span></a>
+
+        <a class="navbar navbar-brand @ShowTitleCssClass" @onclick="ShowHideMenu">ETMS-Blazor</a>
+        @*<a class="btn-link float-right">Link 1</a>*@
+
+        @*<a @onclick="ShowHideMenu">About</a>*@
+    </div>
+
+    <Breadcrumbs RootLinkTitle="Home"></Breadcrumbs>
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>
+
+@code {
+    private bool isShowMenu = true;
+    private string ShowTitleCssClass => isShowMenu ? "hideMenu" : "showMenu";
+    public string ShowHideCssClass => isShowMenu ? "showMenu" : "hideMenu";
+
+    private void ShowHideMenu()
+    {
+        isShowMenu = !isShowMenu;
+    }
+}

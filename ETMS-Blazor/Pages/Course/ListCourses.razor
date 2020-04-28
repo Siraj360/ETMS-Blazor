@@ -1,0 +1,49 @@
+﻿@page "/course-management"
+@inject ICourseService CourseService
+@inject IEmployeeCourseService EmployeeCourseService
+@code
+{
+    int cx = 1;
+}
+<div class="row">
+    <div class="col-md-8">
+        <h5>Training Course Managment</h5>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-dark btn-sm float-right" href="/addcourse">Create New Course</a>
+    </div>
+</div>
+
+@if (courses == null)
+{
+    <Loader />
+}
+else
+{
+    <table class='table table-sm'>
+        <tbody>
+            @foreach (var course in courses)
+            {
+                string courceId = course.CourseID.ToString();
+
+                <CourseInfo cx="@cx" courseId="@courceId"></CourseInfo>
+
+                cx++;
+
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+
+    List<Course> courses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        courses = await CourseService.GetCourses();
+    }
+
+
+}
