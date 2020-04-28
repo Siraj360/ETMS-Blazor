@@ -3,10 +3,10 @@
  
   ## Application Screenshot
   
-![alt tag](https://github.com/Siraj360/ETMS-Blazor/blob/master/ETMS-Blazor/wwwroot/images/blazor1.png)
+![alt tag](https://github.com/Siraj360/ETMS-Blazor/blob/master/ETMS-Blazor/wwwroot/images/Blazor1.png)
 
-![alt tag](https://github.com/Siraj360/ETMS-Blazor/blob/master/ETMS-Blazor/wwwroot/images/blazor2.png)
+![alt tag](https://github.com/Siraj360/ETMS-Blazor/blob/master/ETMS-Blazor/wwwroot/images/Blazor2.png)
 
-![alt tag](https://github.com/Siraj360/ETMS-Blazor/blob/master/ETMS-Blazor/wwwroot/images/blazor3.png)
+![alt tag](https://github.com/Siraj360/ETMS-Blazor/blob/master/ETMS-Blazor/wwwroot/images/Blazor3.png)
 
 ![alt tag](https://github.com/Siraj360/ETMS-Blazor/blob/master/ETMS-Blazor/wwwroot/images/blazor-dashboard.png)
